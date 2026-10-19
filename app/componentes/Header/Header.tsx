@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, type Variants } from "framer-motion";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -73,12 +73,12 @@ export default function Header() {
       opacity: 1,
       transition: { type: "spring", stiffness: 300, damping: 24 }
     }
-  };
+  } satisfies Variants;
 
   return (
     <>
       <header
-        className={`fixed top-0 left-0 w-full z-[100] border-b border-white transition-all duration-300 ease-in-out ${
+        className={`fixed top-0 left-0 w-full z-100 border-b border-white transition-all duration-300 ease-in-out ${
           isScrolled || isMenuOpen ? "bg-white/10 backdrop-blur-lg" : "bg-transparent"
         }`}
       >
