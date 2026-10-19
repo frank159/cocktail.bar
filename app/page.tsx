@@ -1,13 +1,13 @@
 import Header from "./componentes/Header/Header";
 import HeroSection from "./pages/heroSection/HeroSection";
-import InfoSection from "./pages/infoSection/InfoSection";
+import MainSections from "./pages/mainSections/MainSections";
 
 export default function Home() {
   return (
     <div>
       <Header />
       <HeroSection />
-      <InfoSection />
+      <MainSections />
     </div>
   );
 }
