@@ -11,7 +11,7 @@ export default function HeroSection() {
     const y = useTransform(scrollY, [0, 1000], [0, 450]);
 
     return (
-        <div className="relative w-full min-h-[100svh] bg-zinc-950 overflow-hidden flex flex-col justify-center">
+        <div id="home" className="relative w-full min-h-[100svh] bg-zinc-950 overflow-hidden flex flex-col justify-center">
 
             <div
                 className="absolute inset-0 bg-cover bg-center bg-no-repeat"
