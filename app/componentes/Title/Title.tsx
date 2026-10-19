@@ -13,7 +13,7 @@ export default function Title({
 }: TitleProps) {
 	return (
 		<Heading
-			className="font-anton text-6xl md:text-7xl lg:text-[5rem] text-white tracking-wide uppercase leading-none"
+			className=" normal-case font-anton text-6xl md:text-7xl lg:text-[5rem] text-white tracking-wide leading-none"
 			{...props}
 			style={style} // Apenas repassa o style, sem sobrescrever a fonte
 		>
