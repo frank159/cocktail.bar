@@ -11,7 +11,7 @@ export default function MainSections() {
                 <div className="max-w-[90rem] mx-auto flex flex-col gap-24 md:gap-56">
 
                     {/* CARD 1: COQUETELARIA */}
-                    <div className="flex flex-col md:flex-row items-center gap-10 md:gap-32 relative">
+                    <div id="coquetelaria" className="flex flex-col md:flex-row items-center gap-10 md:gap-32 relative scroll-mt-20">
                         {/* Imagem e Estrela */}
                         <div className="w-full md:w-1/2 relative">
                             <div className="relative w-[85%] aspect-6/3 overflow-hidden md:aspect-auto ml-auto md:ml-0 md:w-full">
@@ -61,7 +61,7 @@ export default function MainSections() {
                             </div>
                         </div>
                     </div>
-                    <div className="flex flex-col md:flex-row items-center gap-10 md:gap-32 relative">
+                    <div id="eventos" className="flex flex-col md:flex-row items-center gap-10 md:gap-32 relative scroll-mt-20">
 
                         {/* Container Principal (Texto e Título) */}
                         <div className="w-full md:w-1/2 flex flex-col relative z-10">
@@ -119,7 +119,7 @@ export default function MainSections() {
 
                     </div>
                     {/* CARD 3: SOBRE NÓS (Mantido o código anterior) */}
-                    <div className="flex flex-col relative w-full">
+                    <div id="sobre" className="flex flex-col relative w-full scroll-mt-20">
                         <div className="flex items-end md:mb-16 w-full">
                             <div className="hidden md:block flex-1 mr-4 md:mr-6 border-b border-[#D9D9D9]"></div>
                             <Title as="h2">Sobre nós</Title>
@@ -147,7 +147,7 @@ export default function MainSections() {
             {/* ================= SEÇÃO DE CONTATO ================= */}
             <div
                 id="contato"
-                className="relative z-10 w-full md:min-h-screen flex flex-col justify-between bg-[#270600] md:pt-32"
+                className="relative z-10 w-full md:min-h-screen flex flex-col justify-between bg-[#270600] md:pt-32 scroll-mt-20"
             >
                 <div
                     className="absolute inset-0 hidden bg-cover bg-center bg-no-repeat -z-10 md:block"
