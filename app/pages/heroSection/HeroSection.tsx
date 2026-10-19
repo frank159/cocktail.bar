@@ -56,8 +56,8 @@ export default function HeroSection() {
                 className="absolute top-20 md:top-28 right-4 md:right-10 lg:right-20 xl:right-32 z-10"
             >
                 <Image
-                    src="/imgs/star1.png"
-                    alt="start01"
+                    src="/imgs/Star1.png"
+                    alt="Estrela azul"
                     width={250}
                     height={250}
                     className="w-24 sm:w-32 md:w-40 lg:w-52 object-contain"
