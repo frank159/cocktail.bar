@@ -3,13 +3,19 @@
 import Text from "@/app/componentes/Text/Text";
 import Title from "@/app/componentes/Title/Title";
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import Button from "@/app/componentes/Button/Button";
 
 export default function HeroSection() {
     const { scrollY } = useScroll();
-    const y = useTransform(scrollY, [0, 1000], [0, 450]);
-
+    const y = useSpring(
+        useTransform(scrollY, [0, 1000], [0, 450]),
+        {
+            stiffness: 100,   // resposta ágil ao scroll
+            damping: 20,      // ~10% abaixo do crítico → bounce quase imperceptível
+            mass: 1,
+        }
+    );
     return (
         <div id="home" className="relative w-full min-h-[100svh] bg-zinc-950 overflow-hidden flex flex-col justify-center">
 
