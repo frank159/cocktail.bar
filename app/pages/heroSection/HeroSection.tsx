@@ -4,7 +4,7 @@ import Text from "@/app/componentes/Text/Text";
 import Title from "@/app/componentes/Title/Title";
 import Image from "next/image";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import Button from "@/app/componentes/Button/Button";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
@@ -75,6 +75,14 @@ export default function HeroSection() {
     const { scrollY } = useScroll();
     const y = useTransform(scrollY, [0, 1000], [0, 450]);
     const reduce = useReducedMotion();
+
+    useEffect(() => {
+        if (typeof window !== "undefined" && "scrollRestoration" in window.history) {
+            window.history.scrollRestoration = "manual";
+        }
+        window.scrollTo(0, 0);
+    }, []);
+
 
     return (
         <div id="home" className="relative w-full min-h-[100svh] bg-zinc-950 overflow-hidden flex flex-col justify-center">
