@@ -16,6 +16,17 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (!isMenuOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isMenuOpen]);
+
   const closeMenu = () => setIsMenuOpen(false);
 
   const navLinks = [
@@ -26,7 +37,6 @@ export default function Header() {
     { name: "Contato", href: "#contato" },
   ];
 
-  // NOVA FUNÇÃO: Intercepta o clique e faz a rolagem suave
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault(); // Impede o redirecionamento brusco padrão
 
@@ -34,18 +44,17 @@ export default function Header() {
     const elem = document.getElementById(targetId);
 
     if (elem) {
-      // Calcula a posição do elemento e subtrai a altura do header (64px = 4rem)
       const headerOffset = 64;
       const elementPosition = elem.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.scrollY - headerOffset;
 
       window.scrollTo({
         top: offsetPosition,
-        behavior: "smooth" // AQUI ESTÁ A MÁGICA DA ROLAGEM SUAVE
+        behavior: "smooth"
       });
     }
 
-    closeMenu(); // Fecha o menu mobile se estiver aberto
+    closeMenu();
   };
 
   const menuVariants = {
@@ -82,7 +91,6 @@ export default function Header() {
           }`}
       >
         <div className="flex justify-end w-full h-16 md:h-13">
-          {/* === VERSÃO DESKTOP === */}
           <nav className="hidden md:flex items-center gap-16 px-14 border-l border-white ml-auto">
             {navLinks.map((link) => (
               <a
@@ -96,7 +104,6 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* === VERSÃO MOBILE === */}
           <div className="flex md:hidden ml-auto border-l border-white h-full">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -117,7 +124,6 @@ export default function Header() {
         </div>
       </header>
 
-      {/* === MENU DROPDOWN MOBILE ANIMADO === */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
