@@ -93,7 +93,6 @@ const scriptVariants: Variants = {
                 filter: "blur(0px)",
                 transition: {
                     delay,
-                    // a "caneta" avança num ritmo quase constante, com início e fim suaves
                     clipPath: { duration, ease: [0.4, 0, 0.3, 1] },
                     x: { duration: duration * 0.6, ease: "easeOut" },
                     filter: { duration: duration * 0.5, ease: "easeOut" },
@@ -155,10 +154,6 @@ function RevealItem({
     );
 }
 
-/**
- * Texto cursivo azul. `delay` faz a "escrita" começar um pouco depois do título aparecer;
- * `duration` é o tempo que a caneta leva pra atravessar o texto.
- */
 function RevealScript({
     children,
     className = "",
@@ -469,6 +464,14 @@ function BurnStar({ className = "", from = "left" }: { className?: string; from?
 }
 
 export default function MainSections() {
+    // Força o scroll voltar ao topo ao atualizar/recarregar a página
+    useEffect(() => {
+        if (typeof window !== "undefined" && "scrollRestoration" in window.history) {
+            window.history.scrollRestoration = "manual";
+        }
+        window.scrollTo(0, 0);
+    }, []);
+
     const isDesktop = useIsDesktop();
     const side = (desktop: Direction, mobile: Direction = "bottom"): Direction =>
         isDesktop ? desktop : mobile;
@@ -480,6 +483,12 @@ export default function MainSections() {
         damping: 20,
         mass: 1.2,
     });
+
+    // Parallax leve para baixo na estrela rotativa da Coquetelaria (bem suave para não sobrepor o título abaixo)
+    const starParallaxY = useSpring(
+        useTransform(scrollYProgress, [0, 1], [0, 45]),
+        { stiffness: 60, damping: 20 }
+    );
 
     const y = useTransform(scrollYProgress, [0, 1], [0, -200]);
 
@@ -531,8 +540,10 @@ export default function MainSections() {
                                     className="w-full h-full object-cover object-bottom md:object-center relative z-10 scale-110 origin-bottom-left md:scale-100"
                                 />
                             </div>
+                            {/* Estrela azul rotativa com parallax leve para baixo (y: starParallaxY) */}
+                            {/* Estrela azul apenas com parallax leve para baixo (sem rotação) */}
                             <motion.div
-                                style={{ rotate: rotation }}
+                                style={{ y: starParallaxY }}
                                 className="absolute -top-10 -left-6 w-32 md:w-50 md:top-1/2 md:-translate-y-1/2 md:right-0 md:left-auto md:translate-x-1/2 z-20"
                             >
                                 <Image
@@ -637,7 +648,7 @@ export default function MainSections() {
                             <motion.div
                                 ref={eventStarRef}
                                 style={{ x: eventStarX }}
-                                className="absolute -top-20 left-0 md:-top-8 md:-right-8 w-34 md:w-40 lg:w-52"
+                                className="absolute -top-20 left-0 md:-top-20 md:-right-8 w-34 md:w-40 lg:w-52"
                             >
                                 <Image
                                     src="/imgs/Star3.png"
