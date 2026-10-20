@@ -66,14 +66,40 @@ const itemVariants: Variants = {
     },
 };
 
-const popVariants: Variants = {
-    hidden: { opacity: 0, scale: 0.6, y: 10 },
-    show: {
-        opacity: 1,
-        scale: 1,
-        y: 0,
-        transition: { type: "spring", stiffness: 260, damping: 14, mass: 0.8 },
-    },
+/**
+ * Texto manuscrito: revelado da esquerda pra direita (máscara clip-path), como se estivesse
+ * sendo escrito. As margens negativas do inset evitam cortar os floreios da fonte
+ * (rabinhos, hastes longas), que passam da caixa do texto.
+ */
+type ScriptCustom = { reduce: boolean; delay: number; duration: number };
+
+const scriptVariants: Variants = {
+    hidden: ({ reduce }: ScriptCustom) =>
+        reduce
+            ? { opacity: 0 }
+            : {
+                clipPath: "inset(-60% 100% -60% -25%)",
+                opacity: 0,
+                x: -8,
+                filter: "blur(3px)",
+            },
+    show: ({ reduce, delay, duration }: ScriptCustom) =>
+        reduce
+            ? { opacity: 1, transition: { duration: 0.4, delay } }
+            : {
+                clipPath: "inset(-60% -15% -60% -25%)",
+                opacity: 1,
+                x: 0,
+                filter: "blur(0px)",
+                transition: {
+                    delay,
+                    // a "caneta" avança num ritmo quase constante, com início e fim suaves
+                    clipPath: { duration, ease: [0.4, 0, 0.3, 1] },
+                    x: { duration: duration * 0.6, ease: "easeOut" },
+                    filter: { duration: duration * 0.5, ease: "easeOut" },
+                    opacity: { duration: 0.25, delay },
+                },
+            },
 };
 
 const lineVariants: Variants = {
@@ -129,15 +155,28 @@ function RevealItem({
     );
 }
 
-function RevealPop({
+/**
+ * Texto cursivo azul. `delay` faz a "escrita" começar um pouco depois do título aparecer;
+ * `duration` é o tempo que a caneta leva pra atravessar o texto.
+ */
+function RevealScript({
     children,
     className = "",
+    delay = 0.5,
+    duration = 1.3,
 }: {
     children: ReactNode;
     className?: string;
+    delay?: number;
+    duration?: number;
 }) {
+    const reduce = useReducedMotion();
     return (
-        <motion.span className={className} variants={popVariants}>
+        <motion.span
+            className={className}
+            variants={scriptVariants}
+            custom={{ reduce: !!reduce, delay, duration } satisfies ScriptCustom}
+        >
             {children}
         </motion.span>
     );
@@ -508,9 +547,9 @@ export default function MainSections() {
 
                         <RevealGroup className="w-full md:w-1/2 flex flex-col gap-6 relative">
                             <div className="relative w-full md:w-fit flex flex-col md:block">
-                                <RevealPop className="left-6 -top-10 mt-2 text-sm md:mt-0 absolute md:left-full md:top-3 md:ml-4 md:text-lg -rotate-15 font-beth-ellen text-[#00b4d8] whitespace-nowrap">
+                                <RevealScript className="left-6 -top-10 mt-2 text-sm md:mt-0 absolute md:left-full md:top-3 md:ml-4 md:text-lg -rotate-15 font-beth-ellen text-[#00b4d8] whitespace-nowrap">
                                     = felicidade
-                                </RevealPop>
+                                </RevealScript>
                                 <RevealItem from={side("right")}>
                                     <Title as="h2">
                                         Coquetelaria
@@ -545,9 +584,12 @@ export default function MainSections() {
                                 <RevealItem from={side("left", "right")}>
                                     <Title as="h2">Eventos</Title>
                                 </RevealItem>
-                                <RevealPop className="left-30 -top-13 mt-2 text-sm md:mt-0 absolute md:left-full md:top-3 md:ml-4 md:text-lg -rotate-10 font-beth-ellen text-[#00b4d8] whitespace-nowrap md:-rotate-5">
+                                <RevealScript
+                                    duration={1.6}
+                                    className="left-30 -top-13 mt-2 text-sm md:mt-0 absolute md:left-full md:top-3 md:ml-4 md:text-lg -rotate-10 font-beth-ellen text-[#00b4d8] whitespace-nowrap md:-rotate-5"
+                                >
                                     = sua nova memória favorita
-                                </RevealPop>
+                                </RevealScript>
                             </div>
 
                             <div className="relative w-full mt-4 md:mt-0">
@@ -687,9 +729,9 @@ export default function MainSections() {
                             <RevealItem from="left">
                                 <Title as="h2">Contato</Title>
                             </RevealItem>
-                            <RevealPop className="font-beth-ellen md:mb-1 text-[#00b4d8] md:ml-4 md:text-lg ">
+                            <RevealScript className="font-beth-ellen md:mb-1 text-[#00b4d8] md:ml-4 md:text-lg ">
                                 Manda um alô!
-                            </RevealPop>
+                            </RevealScript>
                         </div>
                         <div className="flex flex-col gap-6 max-w-2xl">
                             <RevealItem from="left">
