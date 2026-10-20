@@ -259,7 +259,7 @@ function BurnStar({ className = "", from = "left" }: { className?: string; from?
         setEmbers([]);
 
         // 3. reset invisível com deslocamento lateral + renascimento elástico
-        const startX = from === "left" ? -60 : 140;
+        const startX = from === "left" ? -60 : 60;
         controls.set({ opacity: 0, scale: 0.5, rotate: 0, x: startX });
         burn.set(0);
         await controls.start({
@@ -276,7 +276,7 @@ function BurnStar({ className = "", from = "left" }: { className?: string; from?
     return (
         <motion.div
             className={className}
-            initial={{ opacity: 0, x: from === "left" ? -60 : 140 }}
+            initial={{ opacity: 0, x: from === "left" ? -60 : 60 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.9, ease: EASE }}
