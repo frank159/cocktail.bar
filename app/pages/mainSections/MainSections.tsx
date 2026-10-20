@@ -1,9 +1,28 @@
+"use client";
+
+import { motion, useInView, useScroll, useSpring, useTransform } from "framer-motion";
 import Image from "next/image";
+import { useRef } from "react";
 import Text from "@/app/componentes/Text/Text";
 import Title from "@/app/componentes/Title/Title";
 import Button from "@/app/componentes/Button/Button";
 
 export default function MainSections() {
+    const { scrollYProgress } = useScroll();
+    const rotation = useSpring(useTransform(scrollYProgress, [0, 1], [0, 360]), {
+        stiffness: 50,
+        damping: 20,
+        mass: 1.2,
+    });
+    const reverseRotation = useSpring(useTransform(scrollYProgress, [0, 1], [0, -360]), {
+        stiffness: 35,
+        damping: 22,
+        mass: 1.5,
+    });
+    const y = useTransform(scrollYProgress, [0, 1], [0, -200]);
+    const starRef = useRef(null);
+    const isStarInView = useInView(starRef);
+
     return (
         <div className="relative w-full flex flex-col overflow-hidden">
             {/* ================= SEÇÃO 1: INFO SECTION ================= */}
@@ -24,13 +43,18 @@ export default function MainSections() {
                                 />
                             </div>
                             {/* Estrela no topo esquerdo (Mobile) / Meio direita (Desktop) */}
-                            <Image
-                                src="/imgs/Star1.png"
-                                alt="Estrela azul"
-                                width={200}
-                                height={200}
+                            <motion.div
+                                style={{ rotate: rotation }}
                                 className="absolute -top-10 -left-6 w-32 md:w-50 md:top-1/2 md:-translate-y-1/2 md:right-0 md:left-auto md:translate-x-1/2 z-20"
-                            />
+                            >
+                                <Image
+                                    src="/imgs/Star1.png"
+                                    alt="Estrela azul"
+                                    width={200}
+                                    height={200}
+                                    className="w-full h-auto"
+                                />
+                            </motion.div>
                         </div>
 
                         {/* Textos e Botão */}
@@ -108,13 +132,18 @@ export default function MainSections() {
                                 height={600}
                                 className="hidden md:block w-full h-auto object-cover"
                             />
-                            <Image
-                                src="/imgs/Star3.png"
-                                alt="Estrela"
-                                width={200}
-                                height={200}
+                            <motion.div
+                                style={{ rotate: reverseRotation }}
                                 className="absolute -top-20 left-0 md:-top-8 md:-right-8 w-34 md:w-40 lg:w-52"
-                            />
+                            >
+                                <Image
+                                    src="/imgs/Star3.png"
+                                    alt="Estrela"
+                                    width={200}
+                                    height={200}
+                                    className="w-full h-auto"
+                                />
+                            </motion.div>
                         </div>
 
                     </div>
@@ -128,7 +157,13 @@ export default function MainSections() {
                         <div className="mb-30 md:mb-0 flex flex-col md:flex-row items-center gap-10 md:gap-16 w-full">
                             <div className="w-full md:w-1/2 relative">
                                 <Image src="/imgs/info3.png" alt="Sobre Nós" width={800} height={600} className="hidden md:block w-full h-auto object-cover relative z-10" />
-                                <Image src="/imgs/Star1.png" alt="Estrela" width={200} height={200} className="hidden md:absolute md:-bottom-10 md:-left-24 md:z-20 md:block" />
+                                <motion.div
+                                    ref={starRef}
+                                    style={{ y: isStarInView ? y : 0 }}
+                                    className="hidden md:block md:absolute md:-bottom-10 md:-left-24 md:z-20"
+                                >
+                                    <Image src="/imgs/Star1.png" alt="Estrela" width={200} height={200} className="w-[200px] h-auto" />
+                                </motion.div>
                             </div>
 
                             <div className="w-full md:w-1/2 flex flex-col gap-6 border-l border-[#D9D9D9] pl-2 py-2 md:border-l-0 md:pl-6">
@@ -137,7 +172,12 @@ export default function MainSections() {
                                 <Text className="font-asap text-base md:text-lg text-white/90">Aqui, a alta coquetelaria perde a postura séria e ganha frescor, criatividade e muita energia boa.</Text>
                                 <Text className="font-asap text-base md:text-lg text-white/90">Somos apaixonados por misturar sabores, conectar pessoas e criar momentos incríveis.</Text>
                             </div>
-                            <Image src="/imgs/Star1.png" alt="Estrela" width={200} height={200} className="absolute bottom-0 -right-5 self-end md:hidden w-34 md:w-40 lg:w-52 object-contain" />
+                            <motion.div
+                                style={{ rotate: rotation }}
+                                className="absolute bottom-0 -right-5 self-end md:hidden w-34 md:w-40 lg:w-52"
+                            >
+                                <Image src="/imgs/Star1.png" alt="Estrela" width={200} height={200} className="w-full h-auto object-contain" />
+                            </motion.div>
                         </div>
                     </div>
 
