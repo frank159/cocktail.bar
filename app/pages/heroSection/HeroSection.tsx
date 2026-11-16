@@ -9,16 +9,6 @@ import Button from "@/app/componentes/Button/Button";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
-/**
- * Linha do tempo da entrada (em segundos):
- *  0.00  fundo dá um "zoom out" lento + escurecimento suave
- *  0.25  título sobe palavra por palavra, saindo de uma máscara
- *  0.60  estrela entra girando com mola e depois flutua
- *  0.95  "preferido ;)" é revelado da esquerda pra direita, como se fosse escrito
- *  1.10  linha lateral cresce de cima pra baixo
- *  1.25  parágrafo entra da esquerda com desfoque
- *  1.50  botões sobem em cascata
- */
 const T = {
     title: 0.25,
     titleStep: 0.13,
@@ -30,11 +20,9 @@ const T = {
     buttonsStep: 0.12,
 };
 
-/** Palavra do título: sobe de dentro de uma máscara (overflow hidden). */
 function Word({ children, index }: { children: ReactNode; index: number }) {
     const reduce = useReducedMotion();
     return (
-        // padding/margem negativa evitam cortar acentos e descendentes das letras
         <span className="inline-block overflow-hidden align-bottom pt-[0.12em] -mt-[0.12em] pb-[0.15em] -mb-[0.15em]">
             <motion.span
                 className="inline-block"
@@ -53,7 +41,6 @@ function Word({ children, index }: { children: ReactNode; index: number }) {
     );
 }
 
-/** Botão que sobe com leve escala, em cascata. */
 function HeroButton({ children, index }: { children: ReactNode; index: number }) {
     const reduce = useReducedMotion();
     return (
@@ -87,7 +74,6 @@ export default function HeroSection() {
     return (
         <div id="home" className="relative w-full min-h-[100svh] bg-zinc-950 overflow-hidden flex flex-col justify-center">
 
-            {/* Fundo: zoom out lento (não esconde a imagem, então não atrasa o LCP) */}
             <motion.div
                 className="absolute inset-0 bg-cover bg-center bg-no-repeat"
                 style={{ backgroundImage: "url('/imgs/HeroSection.png')", backgroundColor: "#270600" }}
@@ -113,7 +99,6 @@ export default function HeroSection() {
                         <Word index={2}>Bar</Word>
                     </Title>
 
-                    {/* "preferido ;)" — revelado da esquerda pra direita, como escrito à mão */}
                     <motion.span
                         className="font-ballet text-[4rem] sm:text-[4rem] md:text-[6.5rem] lg:text-[9rem] text-[#00b4d8] self-end -mt-6 md:mt-0 absolute -bottom-21  left-[35%] md:-bottom-33 md:left-[36%] md:right-auto md:rotate-0 whitespace-nowrap z-20 pointer-events-none"
                         initial={
@@ -133,7 +118,6 @@ export default function HeroSection() {
                 </div>
 
                 <div className="relative mt-10 md:mt-32 ml-0 md:ml-18 h-fit flex flex-col justify-center gap-6 py-4 pl-4 md:pl-6">
-                    {/* Linha lateral (antes era border-l): cresce de cima pra baixo */}
                     <motion.div
                         aria-hidden="true"
                         className="absolute left-0 top-0 h-full w-px bg-white"
@@ -171,10 +155,6 @@ export default function HeroSection() {
                 </div>
             </div>
 
-            {/* Estrela: 3 camadas independentes
-                1) externa  → parallax no scroll (y)
-                2) do meio  → entrada (escala + giro com mola)
-                3) interna  → flutuação contínua depois que entrou */}
             <motion.div
                 style={{ y }}
                 className="absolute top-20 md:top-28 right-4 md:right-10 lg:right-20 xl:right-32 z-10"
@@ -197,7 +177,7 @@ export default function HeroSection() {
                             duration: 5.5,
                             ease: "easeInOut",
                             repeat: Infinity,
-                            delay: T.star + 1.4, // só começa a flutuar depois da entrada assentar
+                            delay: T.star + 1.4,
                         }}
                     >
                         <Image
@@ -206,7 +186,7 @@ export default function HeroSection() {
                             width={250}
                             height={250}
                             priority
-                            className="w-24 sm:w-32 md:w-40 lg:w-52 object-contain"
+                            className="w-24 h-auto sm:w-32 md:w-40 lg:w-52 object-contain"
                         />
                     </motion.div>
                 </motion.div>

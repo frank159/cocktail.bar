@@ -22,10 +22,6 @@ import Button from "@/app/componentes/Button/Button";
 const EMBER_COLORS = ["#0790ab", "#535301", "#270600"];
 const BURN_SLOPE = 30;
 
-/* =====================================================================
- *  ANIMAÇÕES DE ENTRADA DOS TEXTOS
- * ===================================================================== */
-
 type Direction = "left" | "right" | "top" | "bottom" | "none";
 
 const DISTANCE = 48;
@@ -66,11 +62,6 @@ const itemVariants: Variants = {
     },
 };
 
-/**
- * Texto manuscrito: revelado da esquerda pra direita (máscara clip-path), como se estivesse
- * sendo escrito. As margens negativas do inset evitam cortar os floreios da fonte
- * (rabinhos, hastes longas), que passam da caixa do texto.
- */
 type ScriptCustom = { reduce: boolean; delay: number; duration: number };
 
 const scriptVariants: Variants = {
@@ -110,7 +101,7 @@ function RevealGroup({
     children,
     className = "",
     stagger = 0.24,
-    amount = 0.2,
+    amount = 1,
 }: {
     children: ReactNode;
     className?: string;
@@ -205,8 +196,6 @@ function useIsDesktop() {
     return isDesktop;
 }
 
-/* ===================================================================== */
-
 type Ember = {
     id: number;
     x: number;
@@ -236,9 +225,6 @@ const makeEmbers = (): Ember[] =>
         };
     });
 
-/**
- * Estrela interativa com queima e renascimento lateral.
- */
 function BurnStar({ className = "", from = "left" }: { className?: string; from?: "left" | "right" }) {
     const uid = useId().replace(/[^a-zA-Z0-9_-]/g, "");
     const burnId = `star-burn-${uid}`;
@@ -247,7 +233,7 @@ function BurnStar({ className = "", from = "left" }: { className?: string; from?
     const gradId = `star-shine-grad-${uid}`;
 
     const wrapperRef = useRef<HTMLDivElement>(null);
-    const inView = useInView(wrapperRef, { amount: 0.3 });
+    const inView = useInView(wrapperRef, { amount: 1 });
     const prefersReducedMotion = useReducedMotion();
 
     const controls = useAnimation();
@@ -312,7 +298,7 @@ function BurnStar({ className = "", from = "left" }: { className?: string; from?
             className={className}
             initial={{ opacity: 0, x: from === "left" ? -60 : 60 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
+            viewport={{ once: true, amount: 1 }}
             transition={{ duration: 0.9, ease: EASE }}
         >
             <div ref={wrapperRef} className="relative w-full">
@@ -478,12 +464,6 @@ export default function MainSections() {
 
     const { scrollYProgress } = useScroll();
 
-    const rotation = useSpring(useTransform(scrollYProgress, [0, 1], [0, 160]), {
-        stiffness: 50,
-        damping: 20,
-        mass: 1.2,
-    });
-
     // Parallax leve para baixo na estrela rotativa da Coquetelaria (bem suave para não sobrepor o título abaixo)
     const starParallaxY = useSpring(
         useTransform(scrollYProgress, [0, 1], [0, 45]),
@@ -506,7 +486,7 @@ export default function MainSections() {
         }
     );
     const starRef = useRef(null);
-    const isStarInView = useInView(starRef);
+    const isStarInView = useInView(starRef, { amount: 1 });
 
     const contactStarRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress: contactStarProgress } = useScroll({
@@ -540,8 +520,6 @@ export default function MainSections() {
                                     className="w-full h-full object-cover object-bottom md:object-center relative z-10 scale-110 origin-bottom-left md:scale-100"
                                 />
                             </div>
-                            {/* Estrela azul rotativa com parallax leve para baixo (y: starParallaxY) */}
-                            {/* Estrela azul apenas com parallax leve para baixo (sem rotação) */}
                             <motion.div
                                 style={{ y: starParallaxY }}
                                 className="absolute -top-10 -left-6 w-32 md:w-50 md:top-1/2 md:-translate-y-1/2 md:right-0 md:left-auto md:translate-x-1/2 z-20"
@@ -663,7 +641,7 @@ export default function MainSections() {
 
                     {/* CARD 3: SOBRE NÓS */}
                     <div id="sobre" className="flex flex-col relative w-full scroll-mt-20">
-                        <RevealGroup className="flex items-end md:mb-16 w-full" stagger={0.18} amount={0.5}>
+                        <RevealGroup className="flex items-end md:mb-16 w-full" stagger={0.18} amount={1}>
                             <RevealLine
                                 origin="right"
                                 className="hidden md:block flex-1 mr-4 md:mr-6 border-b border-[#D9D9D9]"
