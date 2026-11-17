@@ -260,7 +260,7 @@ function BurnStar({ className = "", from = "left" }: { className?: string; from?
         setIsBurning(true);
         navigator.vibrate?.(15);
 
-        // 1. antecipação (squash + tremida)
+
         await controls.start({
             scale: [1, 1.22, 1.14],
             x: [0, -3, 3, -2, 2, 0],
@@ -268,7 +268,7 @@ function BurnStar({ className = "", from = "left" }: { className?: string; from?
             transition: { duration: 0.28, ease: "easeOut" },
         });
 
-        // 2. queima + brasas
+
         setEmbers(makeEmbers());
         controls.start({
             scale: [1.14, 1.2, 1.08],
@@ -278,7 +278,7 @@ function BurnStar({ className = "", from = "left" }: { className?: string; from?
         await animate(burn, 1, { duration: 0.9, ease: "easeInOut" });
         setEmbers([]);
 
-        // 3. reset invisível com deslocamento lateral + renascimento elástico
+
         const startX = from === "left" ? -60 : 60;
         controls.set({ opacity: 0, scale: 0.5, rotate: 0, x: startX });
         burn.set(0);
@@ -450,7 +450,7 @@ function BurnStar({ className = "", from = "left" }: { className?: string; from?
 }
 
 export default function MainSections() {
-    // Força o scroll voltar ao topo ao atualizar/recarregar a página
+
     useEffect(() => {
         if (typeof window !== "undefined" && "scrollRestoration" in window.history) {
             window.history.scrollRestoration = "manual";
@@ -464,7 +464,7 @@ export default function MainSections() {
 
     const { scrollYProgress } = useScroll();
 
-    // Parallax leve para baixo na estrela rotativa da Coquetelaria (bem suave para não sobrepor o título abaixo)
+
     const starParallaxY = useSpring(
         useTransform(scrollYProgress, [0, 1], [0, 45]),
         { stiffness: 60, damping: 20 }
@@ -504,11 +504,11 @@ export default function MainSections() {
 
     return (
         <div className="relative w-full flex flex-col overflow-hidden">
-            {/* ================= SEÇÃO 1: INFO SECTION ================= */}
+            {}
             <div className="w-full bg-[#270600] text-white py-24 px-6 pb-20 md:pb-70 md:px-12 relative z-0">
                 <div className="max-w-90rem mx-auto flex flex-col gap-24 md:gap-56">
 
-                    {/* CARD 1: COQUETELARIA */}
+                    {}
                     <div id="coquetelaria" className="flex flex-col md:flex-row items-center gap-10 md:gap-32 relative scroll-mt-20">
                         <div className="w-full md:w-1/2 relative">
                             <div className="relative w-[85%] aspect-6/3 overflow-hidden md:aspect-auto ml-auto md:ml-0 md:w-full">
@@ -566,7 +566,7 @@ export default function MainSections() {
                         </RevealGroup>
                     </div>
 
-                    {/* CARD 2: EVENTOS */}
+                    {}
                     <div id="eventos" className="flex flex-col md:flex-row items-center gap-10 md:gap-32 relative scroll-mt-20">
                         <RevealGroup className="w-full md:w-1/2 flex flex-col relative z-10">
                             <div className="relative w-fit">
@@ -639,7 +639,7 @@ export default function MainSections() {
                         </div>
                     </div>
 
-                    {/* CARD 3: SOBRE NÓS */}
+                    {}
                     <div id="sobre" className="flex flex-col relative w-full scroll-mt-20">
                         <RevealGroup className="flex items-end md:mb-16 w-full" stagger={0.18} amount={1}>
                             <RevealLine
@@ -685,7 +685,7 @@ export default function MainSections() {
                 </div>
             </div>
 
-            {/* ================= SEÇÃO DE CONTATO ================= */}
+            {}
             <div
                 id="contato"
                 className="relative z-10 w-full md:min-h-screen flex flex-col justify-between bg-[#270600] md:pt-32 scroll-mt-20"

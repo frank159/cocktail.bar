@@ -1,24 +1,23 @@
 import type { Metadata } from "next";
-import { Anton_SC, Beth_Ellen, Asap_Condensed, Ballet } from "next/font/google"; // Trocado Ballet por Beth_Ellen
+import { Anton_SC, Beth_Ellen, Asap_Condensed, Ballet } from "next/font/google";
 import "./globals.css";
 
-// 1. Configurando as fontes
+
 const anton = Anton_SC({
   subsets: ["latin"],
   weight: "400",
   variable: "--font-anton-next",
 });
 
-// Substituindo a Ballet pela Beth Ellen
 const bethEllen = Beth_Ellen({
   subsets: ["latin"],
-  weight: "400", // Beth Ellen só tem esse peso
-  variable: "--font-beth-ellen-next", 
+  weight: "400",
+  variable: "--font-beth-ellen-next",
 });
 
 const ballet = Ballet({
   subsets: ["latin"],
-  variable: "--font-ballet-next", // MUDOU AQUI
+  variable: "--font-ballet-next",
 });
 
 

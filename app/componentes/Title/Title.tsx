@@ -15,7 +15,7 @@ export default function Title({
 		<Heading
 			className=" normal-case font-anton text-6xl md:text-7xl lg:text-[5rem] text-white tracking-wide leading-none"
 			{...props}
-			style={style} // Apenas repassa o style, sem sobrescrever a fonte
+			style={style}
 		>
 			{children}
 		</Heading>

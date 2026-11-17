@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence, type Variants } from "framer-motion";
+import Image from "next/image";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -38,7 +39,7 @@ export default function Header() {
   ];
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault(); // Impede o redirecionamento brusco padrão
+    e.preventDefault();
 
     const targetId = href.replace("#", "");
     const elem = document.getElementById(targetId);
@@ -90,13 +91,16 @@ export default function Header() {
         className={`fixed top-0 left-0 w-full z-100 border-b border-white transition-all duration-300 ease-in-out ${isScrolled || isMenuOpen ? "bg-white/10 backdrop-blur-lg" : "bg-transparent"
           }`}
       >
-        <div className="flex justify-end w-full h-16 md:h-13">
+        <div className="flex justify-between w-full h-16 md:h-13">
+          <a href="#home" onClick={(e) => handleNavClick(e, "#home")} className="flex items-center px-6">
+            <Image src="/imgs/logo.png" alt="Logo" width={160} height={40} className="h-auto w-40 md:w-50 object-contain" />
+          </a>
           <nav className="hidden md:flex items-center gap-16 px-14 border-l border-white ml-auto">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)} // CONECTADO AQUI
+                onClick={(e) => handleNavClick(e, link.href)}
                 className="font-asap text-white text-base tracking-widest hover:text-[#00b4d8] transition-colors duration-300 uppercase cursor-pointer"
               >
                 {link.name}
@@ -138,7 +142,7 @@ export default function Header() {
                 <motion.a
                   key={link.name}
                   href={link.href}
-                  onClick={(e) => handleNavClick(e, link.href)} // CONECTADO AQUI TAMBÉM
+                  onClick={(e) => handleNavClick(e, link.href)}
                   variants={itemVariants}
                   className="font-asap flex w-full flex-1 items-center justify-center border-t border-white/20 text-center text-white text-lg tracking-widest hover:text-[#00b4d8] transition-colors duration-300 uppercase cursor-pointer"
                 >

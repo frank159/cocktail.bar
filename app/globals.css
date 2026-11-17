@@ -5,12 +5,17 @@
   --foreground: #171717;
 }
 
+::selection {
+  background-color: #0791A9;
+  color: #fff;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  
+
   --font-anton: var(--font-anton-next);
   --font-beth-ellen: var(--font-beth-ellen-next);
   --font-ballet: var(--font-ballet-next);
@@ -28,5 +33,5 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-asap), Arial, Helvetica, sans-serif;
-  overflow-x: hidden; /* <--- ADICIONE ESTA LINHA */
+  overflow-x: hidden;
 }
