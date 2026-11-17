@@ -4,8 +4,10 @@ import Text from "@/app/componentes/Text/Text";
 import Title from "@/app/componentes/Title/Title";
 import Image from "next/image";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import Button from "@/app/componentes/Button/Button";
+import ProjectModal from "@/app/componentes/ProjectCard/ProjectModal";
+import ButtonLink from "@/app/componentes/ButtonLink/ButtonLink";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
@@ -62,6 +64,7 @@ export default function HeroSection() {
     const { scrollY } = useScroll();
     const y = useTransform(scrollY, [0, 1000], [0, 450]);
     const reduce = useReducedMotion();
+    const [drinksMenuOpen, setDrinksMenuOpen] = useState(false);
 
     useEffect(() => {
         if (typeof window !== "undefined" && "scrollRestoration" in window.history) {
@@ -142,14 +145,22 @@ export default function HeroSection() {
 
                     <div className="mt-0 flex flex-wrap gap-3 md:mt-8 md:gap-4">
                         <HeroButton index={0}>
-                            <Button>
+                            <Button
+                                type="button"
+                                onClick={() => setDrinksMenuOpen(true)}
+                                aria-haspopup="dialog"
+                            >
                                 Carta de drinks
                             </Button>
                         </HeroButton>
                         <HeroButton index={1}>
-                            <Button >
+                            <ButtonLink
+                                href="https://wa.me/5541996262562?text=Ol%C3%A1%20%3B)"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
                                 Fazer reserva
-                            </Button>
+                            </ButtonLink>
                         </HeroButton>
                     </div>
                 </div>
@@ -192,6 +203,13 @@ export default function HeroSection() {
                 </motion.div>
             </motion.div>
 
+            <ProjectModal
+                open={drinksMenuOpen}
+                name="Carta de drinks"
+                images={["/imgs/cardapio/cardapio.jpg"]}
+                fitToViewport
+                onClose={() => setDrinksMenuOpen(false)}
+            />
         </div>
     );
 }

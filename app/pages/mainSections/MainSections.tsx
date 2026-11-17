@@ -17,7 +17,8 @@ import Image from "next/image";
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import Text from "@/app/componentes/Text/Text";
 import Title from "@/app/componentes/Title/Title";
-import Button from "@/app/componentes/Button/Button";
+import ButtonLink from "@/app/componentes/ButtonLink/ButtonLink";
+import ProjectModal from "@/app/componentes/ProjectCard/ProjectModal";
 
 const EMBER_COLORS = ["#0790ab", "#535301", "#270600"];
 const BURN_SLOPE = 30;
@@ -450,6 +451,7 @@ function BurnStar({ className = "", from = "left" }: { className?: string; from?
 }
 
 export default function MainSections() {
+    const [drinksMenuOpen, setDrinksMenuOpen] = useState(false);
 
     useEffect(() => {
         if (typeof window !== "undefined" && "scrollRestoration" in window.history) {
@@ -504,11 +506,11 @@ export default function MainSections() {
 
     return (
         <div className="relative w-full flex flex-col overflow-hidden">
-            {}
+            { }
             <div className="w-full bg-[#270600] text-white py-24 px-6 pb-20 md:pb-70 md:px-12 relative z-0">
                 <div className="max-w-90rem mx-auto flex flex-col gap-24 md:gap-56">
 
-                    {}
+                    { }
                     <div id="coquetelaria" className="flex flex-col md:flex-row items-center gap-10 md:gap-32 relative scroll-mt-20">
                         <div className="w-full md:w-1/2 relative">
                             <div className="relative w-[85%] aspect-6/3 overflow-hidden md:aspect-auto ml-auto md:ml-0 md:w-full">
@@ -558,7 +560,12 @@ export default function MainSections() {
                                 </RevealItem>
 
                                 <RevealItem from="bottom" distance={24} className="w-fit mt-4 mx-auto md:mx-0 md:self-start">
-                                    <button className="font-asap text-base md:text-lg px-6 py-2 border border-[#00b4d8] text-white hover:bg-[#00b4d8] hover:text-[#270600] transition-colors duration-300">
+                                    <button
+                                        type="button"
+                                        onClick={() => setDrinksMenuOpen(true)}
+                                        aria-haspopup="dialog"
+                                        className="font-asap text-base md:text-lg px-6 py-2 border border-[#00b4d8] text-white hover:bg-[#00b4d8] hover:text-[#270600] transition-colors duration-300"
+                                    >
                                         Carta de drinks
                                     </button>
                                 </RevealItem>
@@ -566,7 +573,7 @@ export default function MainSections() {
                         </RevealGroup>
                     </div>
 
-                    {}
+                    { }
                     <div id="eventos" className="flex flex-col md:flex-row items-center gap-10 md:gap-32 relative scroll-mt-20">
                         <RevealGroup className="w-full md:w-1/2 flex flex-col relative z-10">
                             <div className="relative w-fit">
@@ -607,9 +614,13 @@ export default function MainSections() {
                                         </Text>
                                     </RevealItem>
                                     <RevealItem from="bottom" distance={24} className="mt-2 self-end md:mt-0">
-                                        <Button>
+                                        <ButtonLink
+                                            href="https://wa.me/5541996262562?text=Ol%C3%A1%20%3B)"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
                                             Fazer reserva
-                                        </Button>
+                                        </ButtonLink>
                                     </RevealItem>
                                 </div>
                             </div>
@@ -639,7 +650,7 @@ export default function MainSections() {
                         </div>
                     </div>
 
-                    {}
+                    { }
                     <div id="sobre" className="flex flex-col relative w-full scroll-mt-20">
                         <RevealGroup className="flex items-end md:mb-16 w-full" stagger={0.18} amount={1}>
                             <RevealLine
@@ -685,7 +696,7 @@ export default function MainSections() {
                 </div>
             </div>
 
-            {}
+            { }
             <div
                 id="contato"
                 className="relative z-10 w-full md:min-h-screen flex flex-col justify-between bg-[#270600] md:pt-32 scroll-mt-20"
@@ -733,9 +744,14 @@ export default function MainSections() {
                                 <Text className="font-asap text-base md:text-lg text-white/90">Se quiser garantir o seu lugar no balcão ou tirar alguma dúvida sobre festas e eventos, é só mandar uma mensagem no nosso WhatsApp  ;)</Text>
                             </RevealItem>
                             <RevealItem from="right" className="w-fit mt-4 self-end">
-                                <button className="font-asap text-base md:text-lg px-8 py-2 border border-[#00b4d8] text-white hover:bg-[#00b4d8] hover:text-[#270600] transition-colors duration-300">
+                                <a
+                                    href="https://wa.me/5541996262562?text=Ol%C3%A1%20%3B)"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="font-asap cursor-pointer text-base md:text-lg px-8 py-2 border border-[#00b4d8] text-white hover:bg-[#00b4d8] hover:text-[#270600] transition-colors duration-300"
+                                >
                                     Garantir meu lugar
-                                </button>
+                                </a>
                             </RevealItem>
                         </div>
                     </RevealGroup>
@@ -749,6 +765,13 @@ export default function MainSections() {
                     </div>
                 </footer>
             </div>
+            <ProjectModal
+                open={drinksMenuOpen}
+                name="Carta de drinks"
+                images={["/imgs/cardapio/cardapio.jpg"]}
+                fitToViewport
+                onClose={() => setDrinksMenuOpen(false)}
+            />
         </div>
     );
 }

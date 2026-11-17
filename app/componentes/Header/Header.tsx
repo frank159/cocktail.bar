@@ -111,7 +111,8 @@ export default function Header() {
           <div className="flex md:hidden ml-auto border-l border-white h-full">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="px-6 h-full text-white hover:text-[#00b4d8] transition-colors focus:outline-none flex items-center justify-center relative z-101"
+              className="px-6 h-full border-0 outline-none ring-0 text-white hover:text-[#00b4d8] transition-colors focus:border-0 focus:outline-none focus:ring-0 focus-visible:border-0 focus-visible:outline-none focus-visible:ring-0 active:border-0 active:outline-none active:ring-0 flex items-center justify-center relative z-101"
+              style={{ WebkitTapHighlightColor: "transparent" }}
               aria-label="Abrir menu"
             >
               {isMenuOpen ? (
